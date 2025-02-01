@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+
+h1 {
+    color: #ff3e3e;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 50%;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+li {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    width: 100px;
+}
+
+button {
+    background: green;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: darkgreen;
+}
+
+.caught {
+    opacity: 0.5; /* Makes it look grayed out */
+    filter: grayscale(100%);
+}
+
+.caught button {
+    background: gray !important; /* Change button color */
+    cursor: not-allowed;
+}
+
+/* Modal Background (Full-Screen Overlay) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content (Fix Scrolling Issue) */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 500px;
+    text-align: center;
+    position: absolute;
+    
+    /* Centering */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Fix: Prevent modal from covering entire screen */
+    max-height: 80vh; /* Maximum height (80% of viewport) */
+    overflow-y: auto; /* Add scrolling if content is too long */
+
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
