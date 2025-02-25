@@ -1,7 +1,26 @@
+:root {
+    --bg-color:white;
+    --text-color: black;
+    --card-bg: white; 
+    --button-bg: green;
+    --button-hover-bg: darkgreen; 
+}
+
+.dark-mode {
+    --bg-color: black;
+    --text-color: white;
+    --card-bg: #222;
+    --button-bg: #444;
+    --button-hover-bg: #666;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f8f8f8;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s; 
+
 }
 
 h1 {
@@ -23,7 +42,7 @@ ul {
 }
 
 li {
-    background: white;
+    background: var(--card-bg);
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -72,7 +91,7 @@ button:hover {
 
 /* Modal Content (Fix Scrolling Issue) */
 .modal-content {
-    background-color: white;
+    background-color: var(--card-bg);
     padding: 20px;
     border-radius: 10px;
     width: 50%;
