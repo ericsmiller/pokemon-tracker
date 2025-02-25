@@ -184,24 +184,27 @@ pokedexSelect.addEventListener("change", fetchPokemon);
 fetchPokemon();
 
 // This is going to be used in order to allow a toggle for dark mode
-const toggleTheme = () => {
-    document.body.classList.toggle("dark-mode");
-  
-    // Save preference in localStorage
-    if (document.body.classList.contains("dark-mode")) {
-      localStorage.setItem("theme", "dark");
-    } else {
-      localStorage.setItem("theme", "light");
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Script loaded!"); // Debugging to confirm script is running
+
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    if (!darkModeToggle) {
+        console.error("Dark mode toggle button not found!");
+        return;
     }
-  };
-  
-  // Apply saved theme on page load
-  window.onload = () => {
-    if (localStorage.getItem("theme") === "dark") {
-      document.body.classList.add("dark-mode");
-    }
-  };
-  
+
+    darkModeToggle.addEventListener("click", () => {
+        console.log("Dark mode button clicked!"); // Debugging when button is clicked
+        document.body.classList.toggle("dark-mode");
+
+        // Change button icon (🌙 for dark mode, ☀️ for light mode)
+        if (document.body.classList.contains("dark-mode")) {
+            darkModeToggle.textContent = "☀️";
+        } else {
+            darkModeToggle.textContent = "🌙";
+        }
+    });
+});
   // Example button to toggle
   document.getElementById("themeToggle").addEventListener("click", toggleTheme);
   
