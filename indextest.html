@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paldea Pokédex</title>
+  <style>
+    .pokedex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .pokemon-card {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .pokemon-types {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .type-badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      color: white;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+
+    .type-normal { background: #a8a878; }
+    .type-fire { background: #f08030; }
+    .type-water { background: #6890f0; }
+    .type-grass { background: #78c850; }
+    .type-electric { background: #f8d030; }
+    .type-ice { background: #99d9d9}
+    .type-fighting { background: #c12c23}
+    .type-poison { background: #a040a0; }
+    .type-ground { background: #e1c168} 
+    .type-flying { background: #a890f0; }
+    .type-psychic { background: #f85789}
+    .type-bug {background: #a9b91a}
+    .type-rock {background: #b9a135} 
+    .type-ghost {background: #705799} 
+    .type-dragon {background: #7035f8} 
+    .type-dark {background: #705746}
+    .type-steel {background: #b9b9d1} 
+    .type-fairy {background: #ef9aae}
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align:center;">Paldea Pokédex</h1>
+  <div id="pokedex" class="pokedex-grid"></div>
+
+  <script>
+    const pokedex = document.getElementById('pokedex');
+
+    async function getPaldeaPokemonSpecies() {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokedex/paldea`);
+      const data = await res.json();
+      return data.pokemon_entries.map(entry => entry.pokemon_species.name);
+    }
+
+    async function getPokemonDetails(name) {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      const data = await res.json();
+      return {
+        name: data.name,
+        sprite: data.sprites.front_default,
+        types: data.types.map(t => t.type.name),
+        bst: data.stats.reduce((sum, s) => sum + s.base_stat, 0)
+      };
+    }
+
+    function renderPokemon(pokemon) {
+      const typeBadges = pokemon.types.map(
+        type => `<span class="type-badge type-${type.toLowerCase()}">${type}</span>`
+      ).join('');
+
+      return `
+        <div class="pokemon-card">
+          <img src="${pokemon.sprite}" alt="${pokemon.name}">
+          <h3>${pokemon.name}</h3>
+          <div class="pokemon-types">${typeBadges}</div>
+          <p><strong>BST:</strong> ${pokemon.bst}</p>
+        </div>
+      `;
+    }
+
+    async function loadPokedex() {
+      const names = await getPaldeaPokemonSpecies();
+      const pokemonData = [];
+
+      for (const name of names) {
+        try {
+          const data = await getPokemonDetails(name);
+          pokemonData.push(data);
+          pokedex.innerHTML += renderPokemon(data);
+        } catch (e) {
+          console.warn(`Failed to fetch data for: ${name}`);
+        }
+      }
+    }
+
+    loadPokedex();
+  </script>
+
+</body>
+</html>
